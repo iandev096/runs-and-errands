@@ -1,21 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { AppLoading } from 'expo';
+import React, { useState } from 'react';
+import { Asset } from 'expo-asset';
+import { ThemeProvider } from 'react-native-elements';
+import theme from './constants/theme';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import { YellowBox, View } from 'react-native';
+import { AuthProvider } from './store/contexts/Auth/AuthProvider';
+import { MainNavigator } from './Navigators/MainNavigator';
 
 export default function App() {
+  const [isInitComplete, setIsInitComplete] = useState(false);
+
+  if (!isInitComplete) {
+    return (
+      <AppLoading
+        startAsync={asynInitTasks}
+        onError={handleAsyncInitError}
+        onFinish={() => setIsInitComplete(true)}
+      />
+    )
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <MainNavigator />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+async function asynInitTasks() {
+  await Asset.loadAsync([
+    require('./assets/logo.png')
+  ]);
+
+  // Initialize Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYWRt3_41DQ4RmvJFa1jASJAWw-TDSn-g",
+    authDomain: "runs-errands.firebaseapp.com",
+    databaseURL: "https://runs-errands.firebaseio.com",
+    projectId: "runs-errands",
+    storageBucket: "runs-errands.appspot.com",
+    messagingSenderId: "1091126136138",
+    appId: "1:1091126136138:web:3667ff48996b86006a85b3"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  YellowBox.ignoreWarnings(['Setting a timer']);
+
+}
+
+function handleAsyncInitError(error: any) {
+  // In this case, you might want to report the error to your error reporting
+  // service, for example Sentry
+  console.warn(error);
+}
+

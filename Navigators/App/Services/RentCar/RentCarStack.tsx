@@ -1,0 +1,38 @@
+import React, { useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { ThemeContext } from 'react-native-elements';
+import { RentCarStackParamList } from './types';
+import { VehicleCategoryScreen } from './VehicleCategoryScreen';
+import { VehicleListScreen } from './VehicleListScreen';
+
+interface RentCarStackProps {
+
+}
+
+const Stack = createStackNavigator<RentCarStackParamList>();
+
+export const RentCarStack: React.FC<RentCarStackProps> = ({ }) => {
+  const { theme } = useContext(ThemeContext);
+
+  return (
+    <Stack.Navigator
+      initialRouteName='VehicleCategory'    
+      headerMode='none'
+    >
+      <Stack.Screen
+        options={{
+          headerStyle: { backgroundColor: theme.colors?.primary }
+        }}
+        name='VehicleCategory'
+        component={VehicleCategoryScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: { backgroundColor: theme.colors?.primary }
+        }}
+        name='VehicleList'
+        component={VehicleListScreen}
+      />
+    </Stack.Navigator>
+  );
+}
