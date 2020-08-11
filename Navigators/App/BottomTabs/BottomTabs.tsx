@@ -8,7 +8,8 @@ import { BottomTabsParamList } from './bottomTabs.types';
 import { HomeScreen } from '../Home/HomeScreen';
 import { AppNavigationProp, AppRouteProp } from '../Index/app.types';
 import { AccountScreen } from '../Account/AccountScreen';
-import { BookingsScreen } from '../Bookings/BookingsScreen';
+import { RequestsTopTabs } from '../Requests/RequestsTopTabs';
+import { BookingsTopTabs } from '../Bookings/BookingsTopTabs';
 
 interface BottomTabsProps {
   navigation: AppNavigationProp<'Tabs'>
@@ -52,6 +53,7 @@ export const BottomTabs: React.FC<BottomTabsProps> = ({ navigation }) => {
 
           if (route.name === 'Home') iconName = 'ios-home';
           else if (route.name === 'Bookings') iconName = 'ios-albums'
+          else if (route.name === 'Requests') iconName = 'ios-contacts';
           else if (route.name === 'Account') iconName = 'ios-person';
 
           return <Ionicons name={iconName} size={size} color={color} />
@@ -68,7 +70,13 @@ export const BottomTabs: React.FC<BottomTabsProps> = ({ navigation }) => {
         ({ route, navigation }) => ({
           focus: e => setHeader('Bookings')
         })}
-        name='Bookings' component={BookingsScreen}
+        name='Bookings' component={BookingsTopTabs}
+      />
+      <BottomTabsNavigator.Screen listeners={
+        ({ route, navigation }) => ({
+          focus: e => setHeader('Requests')
+        })}
+        name='Requests' component={RequestsTopTabs}
       />
       <BottomTabsNavigator.Screen listeners={
         ({ route, navigation }) => ({

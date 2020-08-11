@@ -22,6 +22,7 @@ async function fetchContactDetailsCase(user: User, dispatch: AccountDispatch) {
           mobileNumber: fetchedContactDetailsDoc.data()?.mobileNumber
         }
       }
+      
       return dispatch(dispatchAction);
     } else {
       // throw new Error('Contact details not found'); 

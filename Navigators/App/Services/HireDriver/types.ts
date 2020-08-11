@@ -3,7 +3,12 @@ import { RouteProp } from "@react-navigation/native";
 
 export type HireDriverStackParamList = {
   DriverCategory: undefined,
-  DriverList: undefined
+  DriverList: {
+    category: string
+  },
+  DriverDetail: {
+    driverId: string
+  }
 }
 
 export type HireDriverNavigationProp<T extends keyof HireDriverStackParamList> = StackNavigationProp<HireDriverStackParamList, T>;

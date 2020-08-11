@@ -4,6 +4,7 @@ import { ThemeContext } from 'react-native-elements';
 import { RentCarStackParamList } from './types';
 import { VehicleCategoryScreen } from './VehicleCategoryScreen';
 import { VehicleListScreen } from './VehicleListScreen';
+import { VehicleDetailScreen } from './VehicleDetailScreen';
 
 interface RentCarStackProps {
 
@@ -16,7 +17,7 @@ export const RentCarStack: React.FC<RentCarStackProps> = ({ }) => {
 
   return (
     <Stack.Navigator
-      initialRouteName='VehicleCategory'    
+      initialRouteName='VehicleCategory'
       headerMode='none'
     >
       <Stack.Screen
@@ -32,6 +33,10 @@ export const RentCarStack: React.FC<RentCarStackProps> = ({ }) => {
         }}
         name='VehicleList'
         component={VehicleListScreen}
+      />
+      <Stack.Screen
+        name='VehicleDetail'
+        component={VehicleDetailScreen}
       />
     </Stack.Navigator>
   );

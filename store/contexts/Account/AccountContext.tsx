@@ -35,7 +35,6 @@ export const AccountContextProvider: React.FC = ({ children }) => {
     try {
       setIsInitializing(true);
       await AccountDispatchMiddleware(dispatch)({ type: 'FETCH_CONTACT_DETAILS' })
-      await AccountDispatchMiddleware(dispatch)({ type: 'FETCH_CONTACT_DETAILS' });
       await AccountDispatchMiddleware(dispatch)({ type: 'FETCH_ADDRESSES' });
       await AccountDispatchMiddleware(dispatch)({ type: 'FETCH_PAYMENT_METHODS' });
       setIsInitializing(false);

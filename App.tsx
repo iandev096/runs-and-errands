@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Asset } from 'expo-asset';
 import { ThemeProvider } from 'react-native-elements';
 import theme from './constants/theme';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import 'firebase/firestore';
 import { YellowBox, View } from 'react-native';
 import { AuthProvider } from './store/contexts/Auth/AuthProvider';

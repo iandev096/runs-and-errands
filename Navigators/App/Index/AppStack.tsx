@@ -7,6 +7,7 @@ import { EditAddressScreen } from '../Account/EditAddressScreen';
 import { EditContactDetailsScreen } from '../Account/EditContactDetailsScreen';
 import { EditPaymentMethodsScreen } from '../Account/EditPaymentMethodsScreen';
 import { ServicesStack } from '../Services/ServicesStack';
+import { AccountContextProvider } from '../../../store/contexts/Account/AccountContext';
 
 interface AppStackProps {
 
@@ -23,52 +24,53 @@ export const AppStack: React.FC<AppStackProps> = ({ }) => {
   }, []);
 
   return (
-    <Stack.Navigator
-      initialRouteName='Tabs'
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerTintColor: '#fff',
-      }}
-    >
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
+    <AccountContextProvider>
+      <Stack.Navigator
+        initialRouteName='Tabs'
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
         }}
-        name='Tabs'
-        component={BottomTabs}
-      />
+      >
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='Tabs'
+          component={BottomTabs}
+        />
 
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary },
-          headerShown: false
-        }}
-        name='Services'
-        component={ServicesStack}
-      />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary },
+            headerShown: false
+          }}
+          name='Services'
+          component={ServicesStack}
+        />
 
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='EditAddress'
-        component={EditAddressScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='EditContact'
-        component={EditContactDetailsScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='EditPaymentMethods'
-        component={EditPaymentMethodsScreen}
-      />
-    </Stack.Navigator>
-
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='EditAddress'
+          component={EditAddressScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='EditContact'
+          component={EditContactDetailsScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='EditPaymentMethods'
+          component={EditPaymentMethodsScreen}
+        />
+      </Stack.Navigator>
+    </AccountContextProvider>
   );
 }

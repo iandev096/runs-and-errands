@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'react-native-elements';
 import { RentOutCarStackParamList } from './types';
 import { VehicleDetailsScreen } from './VehicleDetailsScreen';
-import { ContactDetailsScreen } from './ContactDetailsScreen';
+import { DriverOptionsScreen } from './DriverOptionsScreen';
 import { AdditionalInfoScreen } from './AdditionalInfoScreen';
 
 interface RentOutCarStackProps {
@@ -31,8 +31,8 @@ export const RentOutCarStack: React.FC<RentOutCarStackProps> = ({ }) => {
         options={{
           headerStyle: { backgroundColor: theme.colors?.primary }
         }}
-        name='ContactDetails'
-        component={ContactDetailsScreen}
+        name='DriverOptions'
+        component={DriverOptionsScreen}
       />
       <Stack.Screen
         options={{

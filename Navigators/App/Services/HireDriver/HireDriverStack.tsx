@@ -4,6 +4,7 @@ import { ThemeContext } from 'react-native-elements';
 import { HireDriverStackParamList } from './types';
 import { DriverCategoryScreen } from './DriverCategoryScreen';
 import { DriverListScreen } from './DriverListScreen';
+import { DriverDetailScreen } from './DriverDetail';
 
 interface HireDriverStackProps {
 
@@ -32,6 +33,13 @@ export const HireDriverStack: React.FC<HireDriverStackProps> = ({ }) => {
         }}
         name='DriverList'
         component={DriverListScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: { backgroundColor: theme.colors?.primary }
+        }}
+        name='DriverDetail'
+        component={DriverDetailScreen}
       />
     </Stack.Navigator>
   );

@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'react-native-elements';
 import { BecomeDriverStackParamList } from './types';
-import { DriverDetailsScreen } from './DriverDetailsScreen';
+import { DriverInfoScreen } from './DriverInfoScreen';
+import { LicenseInfoScreen } from './LicenseInfoScreen';
+import { ContactAddressScreen } from './ContactAddressScreen';
 
 interface BecomeDriverStackProps {
 
@@ -15,7 +17,7 @@ export const BecomeDriverStack: React.FC<BecomeDriverStackProps> = ({ }) => {
 
   return (
     <Stack.Navigator
-      initialRouteName='DriverDetails'
+      initialRouteName='DriverInfo'
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: '#fff',
@@ -25,8 +27,22 @@ export const BecomeDriverStack: React.FC<BecomeDriverStackProps> = ({ }) => {
         options={{
           headerStyle: { backgroundColor: theme.colors?.primary }
         }}
-        name='DriverDetails'
-        component={DriverDetailsScreen}
+        name='DriverInfo'
+        component={DriverInfoScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: { backgroundColor: theme.colors?.primary }
+        }}
+        name='LicenseInfo'
+        component={LicenseInfoScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: { backgroundColor: theme.colors?.primary }
+        }}
+        name='ContactAddress'
+        component={ContactAddressScreen}
       />
     </Stack.Navigator>
   );

@@ -5,6 +5,7 @@ export type BottomTabsParamList = {
   Home: undefined,
   Bookings: undefined,
   Account: undefined,
+  Requests: undefined,
   
   // bubbled up
   Services: any

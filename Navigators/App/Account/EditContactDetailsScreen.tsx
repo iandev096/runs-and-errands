@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
   mobile: yup.string().required().label('Mobile number'),
   email: yup.string().email().required().label('Email'),
 });
-const formikInitialValues = new AccountFormikInputModel('Isaac');
+const formikInitialValues = new AccountFormikInputModel();
 
 export const EditContactDetailsScreen: React.FC<EditContactDetailsScreenProps> = ({ navigation, route }) => {
   const { theme } = useContext(ThemeContext);
@@ -32,10 +32,10 @@ export const EditContactDetailsScreen: React.FC<EditContactDetailsScreenProps> =
   useEffect(() => {
     setFormInitVal({
       ...formikInitialValues,
-      firstName: contactDetails.firstName,
-      lastName: contactDetails.lastName,
-      mobile: contactDetails.mobileNumber,
-      email: contactDetails.email
+      firstName: contactDetails.firstName ?? '',
+      lastName: contactDetails.lastName ?? '',
+      mobile: contactDetails.mobileNumber ?? '',
+      email: contactDetails.email ?? ''
     });
   }, [contactDetails]);
 

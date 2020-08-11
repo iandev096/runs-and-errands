@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
-import { SERVICE_NAME } from '../../../data/services-data';
+import { SERVICE_NAME } from '../../../data/services/data';
 
 export type ServicesStackParamList = {
   [SERVICE_NAME.BecomeDriver]: undefined,
@@ -14,3 +14,4 @@ export type ServicesStackParamList = {
 export type ServicesNavigationProp<T extends keyof ServicesStackParamList> = StackNavigationProp<ServicesStackParamList, T>;
 
 export type ServicesRouteProp<T extends keyof ServicesStackParamList> = RouteProp<ServicesStackParamList, T>; 
+

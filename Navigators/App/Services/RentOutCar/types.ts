@@ -3,8 +3,11 @@ import { RouteProp } from "@react-navigation/native";
 
 export type RentOutCarStackParamList = {
   VehicleDetails: undefined,
-  ContactDetails: undefined,
-  AdditionalInfo: undefined
+  DriverOptions: undefined,
+  AdditionalInfo: undefined,
+  
+  //bubbled up
+  Tabs: undefined
 }
 
 export type RentOutCarNavigationProp<T extends keyof RentOutCarStackParamList> = StackNavigationProp<RentOutCarStackParamList, T>;

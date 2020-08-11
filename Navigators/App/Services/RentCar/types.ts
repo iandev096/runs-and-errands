@@ -5,6 +5,9 @@ export type RentCarStackParamList = {
   VehicleCategory: undefined,
   VehicleList: {
     category: string
+  },
+  VehicleDetail: {
+    vehicleId: string
   }
 }
 

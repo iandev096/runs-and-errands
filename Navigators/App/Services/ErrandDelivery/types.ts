@@ -5,6 +5,10 @@ export type ErrandDeliveryStackParamList = {
   ErrandDeliveryCategory: undefined,
   Delivery: undefined,
   Errand: undefined,
+
+  
+  //bubbled up
+  Tabs: undefined
 }
 
 export type ErrandDeliveryNavigationProp<T extends keyof ErrandDeliveryStackParamList> = StackNavigationProp<ErrandDeliveryStackParamList, T>;

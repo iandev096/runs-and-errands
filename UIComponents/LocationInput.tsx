@@ -12,8 +12,11 @@ type Location = { lat: number, lng: number };
 interface LocationInputProps {
   initialLocation?: Location,
   errorMessage?: string,
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => any,
-  theme: Theme
+  label?: string,
+  theme: Theme,
+
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean | undefined) => any,
+  onLocationChange: (location: { lat: number, lng: number }) => any
 }
 
 const verifyPermissions = async () => {
@@ -26,7 +29,7 @@ const verifyPermissions = async () => {
   return true;
 }
 
-export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, errorMessage, setFieldValue, theme }) => {
+export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, errorMessage, label, setFieldValue, onLocationChange, theme }) => {
   const [location, setLocation] = useState<Location | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState<string | undefined>();
@@ -35,11 +38,17 @@ export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, e
   useEffect(() => {
     if (errorMessage && (!location)) setErr(errorMessage);
     else setErr(undefined);
+    console.log(errorMessage)
   }, [errorMessage, location]);
 
   const locationChangeHandler = (location: Location) => {
-    setFieldValue('lat', location.lat, true);
-    setFieldValue('lng', location.lng, true);
+    if (setFieldValue) {
+      setFieldValue('lat', location.lat, true);
+      setFieldValue('lng', location.lng, true);
+    }
+
+    // for react-form-hook
+    onLocationChange({ lat: location.lat, lng: location.lng })
   }
 
   useEffect(() => {
@@ -93,7 +102,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, e
         initialLocation={location}
       />
       <View style={styles.locationInput}>
-        <NormalText style={styles.label}>Location</NormalText>
+        <NormalText style={styles.label}>{label ?? 'Location'}</NormalText>
         <MapPreview
           onPress={() => mapHandler()}
           location={location}
@@ -114,8 +123,8 @@ export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, e
         </NormalText>}
 
         <View style={styles.actions}>
-          <Button title='Current' onPress={() => currentHandler()} />
-          <Button title='From map' onPress={() => mapHandler()} />
+          <Button type='clear' buttonStyle={{backgroundColor: 'rgba(0, 153, 255, 0.0546)'}} title='Current' onPress={() => currentHandler()} />
+          <Button type='clear' buttonStyle={{backgroundColor: 'rgba(0, 153, 255, 0.0546)'}} title='From map' onPress={() => mapHandler()} />
         </View>
       </View>
     </>
