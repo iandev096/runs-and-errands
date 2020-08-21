@@ -13,6 +13,7 @@ import { SERVICE_NAME } from '../../../../data/services/data';
 import { objType } from '../../../../constants/firebase/storage';
 import { Alert } from 'react-native';
 import { Loader } from '../../../../UIComponents/Loader';
+import { RentOutCarContext } from '../../../../store/contexts/Services/RentOutCar/RentOutCarContext';
 
 interface AdditionalInfoScreenProps {
   navigation: RentOutCarNavigationProp<'AdditionalInfo'>;
@@ -29,11 +30,12 @@ const schema = yup.object().shape({
 
 const ctrlNames = additionalInfoFormControls.map(fc => fc.name);
 export const AdditionalInfoScreen: React.FC<AdditionalInfoScreenProps> = ({ navigation }) => {
+  const { dispatch, driverOptions, vehicleDetails, additionalInfo } = useContext(RentOutCarContext);
   const { control, handleSubmit, errors, setValue, clearErrors } = useForm<AdditionalInfoFormData>({
     defaultValues: {
-      additionalInfo: [],
-      description: '',
-      vehicleImage: { uri: '' }
+      additionalInfo: additionalInfo?.additionalInfo ?? [],
+      description: additionalInfo?.description ?? '',
+      vehicleImage: additionalInfo?.vehicleImage ?? { uri: '' }
     },
     resolver: yupResolver(schema)
   });
@@ -54,24 +56,50 @@ export const AdditionalInfoScreen: React.FC<AdditionalInfoScreenProps> = ({ navi
   }, formValidDependencies);
 
   const submitHandler = async (f: AdditionalInfoFormData) => {
+    dispatch({ type: 'SET_ADDITIONAL_INFO', payload: f });
     try {
       setIsLoading(true);
 
-      await uploadUserServiceImage(
+     const {downloadURL} = await uploadUserServiceImage(
         SERVICE_NAME.RentOutCar,
         objType.Vehicle,
         f.vehicleImage.uri
       );
 
+      if (vehicleDetails && driverOptions) {
+        await dispatch({
+          type: 'POST_RENT_OUT_CAR', payload: {
+            expectedRentPerDay: driverOptions.expectedRentPerDay,
+            expectedRentPerHalf: driverOptions.expectedRentPerHalf,
+            preferredOptions: driverOptions.preferredOptions,
+
+            make: vehicleDetails.make,
+            model: vehicleDetails.model,
+            fuelType: vehicleDetails.fuelType,
+            gearbox: vehicleDetails.gearbox,
+            category: vehicleDetails.category,
+            mileage: vehicleDetails.mileage,
+            extColor: vehicleDetails.extColor,
+            regPlateNumber: vehicleDetails.regPlateNumber,
+
+            additionalInfo: f.additionalInfo,
+            description: f.description,
+            vehicleImage: { uri: downloadURL }
+          }
+        });
+      } else {
+        throw new Error('Car details not completed');
+      }
+
+      setIsLoading(false);
       Alert.alert('Success', 'We have received your details', [{
         text: 'OK',
         onPress: () => navigation.navigate('Tabs')
       }])
-      setIsLoading(false);
+
     } catch (err) {
       setIsLoading(false);
-
-      Alert.alert('Error', 'Error uploading image. Please try again', [
+      Alert.alert('Error', 'Error posting car. Please try again', [
         {
           text: 'Go HOME',
           onPress: () => navigation.navigate('Tabs')
@@ -80,7 +108,6 @@ export const AdditionalInfoScreen: React.FC<AdditionalInfoScreenProps> = ({ navi
           text: 'Try Again'
         }
       ]);
-
     }
   }
 
@@ -104,7 +131,7 @@ export const AdditionalInfoScreen: React.FC<AdditionalInfoScreenProps> = ({ navi
           onPress: () => { navigation.goBack() }
         }}
         rightFooterButton={{
-          title: 'NEXT',
+          title: 'SUBMIT',
           onPress: handleSubmit(submitHandler),
           disabled: !formValid
         }}

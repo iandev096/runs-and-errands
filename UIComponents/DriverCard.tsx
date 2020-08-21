@@ -10,7 +10,7 @@ interface DriverCardProps extends CardProps {
   theme: Theme,
   name: string,
   badges?: string[],
-  categories?: string[],
+  vehicleTypes?: string[],
   isAvailable: boolean,
   thumbnailUrl: any,
   size?: 'big' | 'small',
@@ -24,7 +24,7 @@ function CardBodyIcon({ theme, ...props }: CardBodyIconProps) {
   return <Icon color={theme.colors?.success} size={14} {...props} />
 }
 
-export const DriverCard: React.FC<DriverCardProps> = ({ badges, thumbnailUrl, size, name, categories, isAvailable, onPress, containerStyle, theme, ...props }) => {
+export const DriverCard: React.FC<DriverCardProps> = ({ badges, thumbnailUrl, size, name, vehicleTypes, isAvailable, onPress, containerStyle, theme, ...props }) => {
   const [computedStyle, setComputedStyle] = useState<StyleProp<ViewProps>>();
   
   useEffect(() => {
@@ -59,7 +59,7 @@ export const DriverCard: React.FC<DriverCardProps> = ({ badges, thumbnailUrl, si
             {name}
           </NormalText>
           <NormalText numberOfLines={1} style={{ ...styles.cuisine, color: theme.colors?.grey3 }}>
-            {categories?.join(' • ')}
+            {vehicleTypes?.join(' • ')}
           </NormalText>
         </View>
       </TouchableOpacity>

@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
+import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { Container } from '../../../../UIComponents/Container';
 import { FadeTitleText } from '../../../../UIComponents/FadeTitleText';
 import { ThemeContext } from 'react-native-elements';
 import { Driver } from '../../../../data/hireDrivers/types';
 import { DriverList } from './DriverList';
 import { HireDriverNavigationProp, HireDriverRouteProp } from './types';
-import { HIRE_DRIVERS } from '../../../../data/hireDrivers/data';
+import { HireDriverContext } from '../../../../store/contexts/Services/HireDriver/HireDriverContext';
 
 interface DriverListScreenProps {
   navigation: HireDriverNavigationProp<'DriverList'>,
@@ -14,34 +14,41 @@ interface DriverListScreenProps {
 }
 
 export const DriverListScreen: React.FC<DriverListScreenProps> = ({ navigation, route }) => {
-  const [filteredDrivers, setFilteredDrivers] = useState<Driver[]>([]);
+  const { drivers, dispatch } = useContext(HireDriverContext);
   const { theme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    if (route.params.category) {
-      const currentCategory = route.params.category;
-      const filtered = HIRE_DRIVERS.filter((driver) => {
-        return driver.categories.some(category => category.toString() === currentCategory);
-      });
-
-      setFilteredDrivers(filtered);
-    }
-  }, [route.params.category]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const navToDetail = (driverId: string) => {
     navigation.navigate('DriverDetail', { driverId });
   }
+
+  const onRefresh = useCallback(async () => {
+    if (!dispatch) return;
+    try {
+      setRefreshing(true);
+      await dispatch({ type: 'FETCH_DRIVERS' })
+      setRefreshing(false);
+    } catch (err) {
+      setRefreshing(false);
+      Alert.alert('Error', 'Unable to fetch drivers. Please check your internet connection');
+    }
+  }, [dispatch]);
 
   return (
     <Container style={styles.container}>
       <View style={styles.inner}>
         <FadeTitleText theme={theme}>Select Driver</FadeTitleText>
         <View style={styles.vehicles}>
-          <DriverList drivers={filteredDrivers} theme={theme} navToDetail={navToDetail} />
+          {drivers && <DriverList
+            drivers={drivers}
+            theme={theme}
+            navToDetail={navToDetail}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+          />}
         </View>
       </View>
     </Container>
-
   );
 };
 

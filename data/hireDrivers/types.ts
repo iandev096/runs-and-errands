@@ -16,16 +16,13 @@ export enum VEHICLE_TYPE {
 }
 
 export type Driver = {
-  id: string,
   firstName: string,
   lastName: string,
   about: string,
-  skills: Set<string>,
-  typesOfVehicles: Set<VEHICLE_TYPE>,
+  skills: Set<string> | string[],
+  typesOfVehicles: Set<VEHICLE_TYPE> | string[],
   imageUrl: any,
   nameOnLicense: string,
   drivingSince: number,
-  isAvailable: boolean,
-  categories: CATEGORIES[],
 }
 

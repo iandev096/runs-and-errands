@@ -8,6 +8,7 @@ import { DriverInfoFormData } from '../../../../constants/form/becomeDriver/driv
 import { FormScreen } from '../../../../UIComponents/FormScreen';
 import { BecomeDriverNavigationProp } from './types';
 import { RenderFormControls } from '../../../../util/form/RenderFormControls';
+import { BecomeDriverContext } from '../../../../store/contexts/Services/BecomeDriver/BecomeDriverContext';
 
 interface DriverInfoScreenProps {
   navigation: BecomeDriverNavigationProp<'DriverInfo'>;
@@ -34,7 +35,7 @@ export const DriverInfoScreen: React.FC<DriverInfoScreenProps> = ({ navigation }
     },
     resolver: yupResolver(schema)
   });
-
+  const { dispatch } = useContext(BecomeDriverContext);
   const { theme } = useContext(ThemeContext);
   const [formValid, setFormValid] = useState(false);
 
@@ -50,8 +51,9 @@ export const DriverInfoScreen: React.FC<DriverInfoScreenProps> = ({ navigation }
     }
   }, formValidDependencies);
 
-  const nextHandler = (f: any) => {
-    navigation.navigate('LicenseInfo');
+  const nextHandler = (f: DriverInfoFormData) => {
+    dispatch({ type: 'SET_DRIVER_INFO', payload: f})
+    navigation.navigate('ContactAddress');
   }
 
   const renderedControls = RenderFormControls<DriverInfoFormData>({

@@ -8,19 +8,20 @@ import { DriverOptionsFormData } from '../../../../constants/form/rentOutCar/dri
 import { RenderFormControls } from '../../../../util/form/RenderFormControls';
 import { RentOutCarNavigationProp } from './types';
 import { FormScreen } from '../../../../UIComponents/FormScreen';
+import { RentOutCarContext } from '../../../../store/contexts/Services/RentOutCar/RentOutCarContext';
 
-interface  DriverOptionsScreenProps{
+interface DriverOptionsScreenProps {
   navigation: RentOutCarNavigationProp<'DriverOptions'>;
 }
 
 const schema = yup.object().shape({
   expectedRentPerDay: yup.number().min(1, 'Enter a valid number').required(),
-  expectedRentPerHalf:  yup.number().min(1, 'Enter a valid number').required(),
-  preferredOptions:  yup.string().required(),
+  expectedRentPerHalf: yup.number().min(1, 'Enter a valid number').required(),
+  preferredOptions: yup.string().required(),
 });
 
 const ctrlNames = driverOptionsFormControls.map(fc => fc.name);
-export const  DriverOptionsScreen: React.FC< DriverOptionsScreenProps> = ({ navigation }) => {
+export const DriverOptionsScreen: React.FC<DriverOptionsScreenProps> = ({ navigation }) => {
   const { control, handleSubmit, errors, setValue, clearErrors } = useForm<DriverOptionsFormData>({
     defaultValues: {
       expectedRentPerDay: 0,
@@ -29,7 +30,8 @@ export const  DriverOptionsScreen: React.FC< DriverOptionsScreenProps> = ({ navi
     },
     resolver: yupResolver(schema)
   });
-  
+
+  const { dispatch } = useContext(RentOutCarContext);
   const { theme } = useContext(ThemeContext);
   const [formValid, setFormValid] = useState(false);
 
@@ -45,12 +47,12 @@ export const  DriverOptionsScreen: React.FC< DriverOptionsScreenProps> = ({ navi
     }
   }, formValidDependencies);
 
-  const nextHandler = (f: any) => {
-    
+  const nextHandler = (f: DriverOptionsFormData) => {
+    dispatch({ type: 'SET_DRIVER_OPTIONS', payload: f })
     navigation.navigate('AdditionalInfo');
   }
 
-  
+
   const renderedControls = RenderFormControls<DriverOptionsFormData>({
     control,
     controls: driverOptionsFormControls,
@@ -62,7 +64,7 @@ export const  DriverOptionsScreen: React.FC< DriverOptionsScreenProps> = ({ navi
 
   return (
     <FormScreen
-    heading='ENTER DRIVER OPTIONS'
+      heading='ENTER DRIVER OPTIONS'
       theme={theme}
       leftFooterButton={{
         title: 'BACK',

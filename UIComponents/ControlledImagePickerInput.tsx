@@ -30,7 +30,7 @@ export const ControlledImagePickerInput: React.FC<ControlledImagePickerInputProp
     const initialImageUrl = imageUrl;
     if (imageUrl) setValue(name, { uri: initialImageUrl });
   }, [imageUrl, name]);
-  console.log(error.uri)
+
   return (
     <Controller
       name={name}

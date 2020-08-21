@@ -11,7 +11,7 @@ interface CustomSectionListProps extends ListItemProps {
   };
   listItemsProps: ListItemProps[],
   theme: Theme,
-  style: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
 }
 
 export const CustomSectionList: React.FC<CustomSectionListProps> = ({ title, titleBtn, listItemsProps, theme, style }) => {

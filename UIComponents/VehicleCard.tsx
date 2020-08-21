@@ -36,7 +36,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ badges, thumbnailUrl, 
       marginRight: 20
     }, containerStyle))
   }, [containerStyle, size]);
-
+  
 
   return (
     <CustomCard containerStyle={computedStyle} {...props}>
@@ -46,7 +46,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ badges, thumbnailUrl, 
           style={{
             height: size === 'small' ? 140 : 200
           }}
-          source={thumbnailUrl}
+          source={{uri: thumbnailUrl}}
           theme={theme}
           imageText={{
             show: !isAvailable,

@@ -60,7 +60,7 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({ navigation }) => {
               },
             ]}
           />
-          <CustomSectionList
+          {/* <CustomSectionList
             style={styles.sectionList}
             theme={theme}
             title='Address'
@@ -73,8 +73,8 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({ navigation }) => {
               Component: TouchableScale,
               bottomDivider: true
             }))}
-          />
-          <CustomSectionList
+          /> */}
+          {/* <CustomSectionList
             style={styles.sectionList}
             theme={theme}
             title='Payment Methods'
@@ -105,7 +105,7 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({ navigation }) => {
                 bottomDivider: true
               },
             ]}
-          />
+          /> */}
         </View>
       </Container>
     </Screen>

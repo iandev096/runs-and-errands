@@ -5,6 +5,7 @@ import { ErrandDeliveryStackParamList } from './types';
 import { ErrandDeliveryCategoryScreen } from './ErrandDeliveryCategoryScreen';
 import { ErrandScreen } from './ErrandScreen';
 import { DeliveryScreen } from './DeliveryScreen';
+import { ErrandDeliveryProvider } from '../../../../store/contexts/Services/ErrandDelivery/ErrandDeliveryProvider';
 
 interface ErrandDeliveryStackProps {
 
@@ -16,31 +17,33 @@ export const ErrandDeliveryStack: React.FC<ErrandDeliveryStackProps> = ({ }) => 
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Stack.Navigator
-      initialRouteName='ErrandDeliveryCategory'
-      headerMode='none'
-    >
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='ErrandDeliveryCategory'
-        component={ErrandDeliveryCategoryScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='Errand'
-        component={ErrandScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='Delivery'
-        component={DeliveryScreen}
-      />
-    </Stack.Navigator>
+    <ErrandDeliveryProvider>
+      <Stack.Navigator
+        initialRouteName='ErrandDeliveryCategory'
+        headerMode='none'
+      >
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='ErrandDeliveryCategory'
+          component={ErrandDeliveryCategoryScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='Errand'
+          component={ErrandScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='Delivery'
+          component={DeliveryScreen}
+        />
+      </Stack.Navigator>
+    </ErrandDeliveryProvider>
   );
 }

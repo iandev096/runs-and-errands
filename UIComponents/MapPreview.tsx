@@ -6,10 +6,11 @@ import ENV from '../constants/env';
 interface MapPreviewProps extends TouchableOpacityProps {
   theme: Theme,
   location: { lat: number, lng: number } | null,
-  initialLocation?: { lat: number, lng: number } 
+  initialLocation?: { lat: number, lng: number },
+  showBorder?: boolean
 }
 
-export const MapPreview: React.FC<MapPreviewProps> = ({ onPress, children, initialLocation, style, theme, location }) => {
+export const MapPreview: React.FC<MapPreviewProps> = ({ onPress, children, showBorder, initialLocation, style, theme, location }) => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
   const [computedStyle, setComputedStyle] = useState<StyleProp<ViewStyle>>();
   const [prevLoc, setPrevLoc] = useState(initialLocation);
@@ -24,7 +25,7 @@ export const MapPreview: React.FC<MapPreviewProps> = ({ onPress, children, initi
     
     setComputedStyle(StyleSheet.compose({
       ...styles.imageContainer,
-      borderColor: theme.colors?.grey3,
+      borderColor: showBorder ? theme.colors?.grey3 : 'transparent',
     }, style));
 
   }, [style]);

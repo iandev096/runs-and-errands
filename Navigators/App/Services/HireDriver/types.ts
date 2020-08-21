@@ -8,7 +8,10 @@ export type HireDriverStackParamList = {
   },
   DriverDetail: {
     driverId: string
-  }
+  },
+
+  // bubbled up
+  Tabs: undefined
 }
 
 export type HireDriverNavigationProp<T extends keyof HireDriverStackParamList> = StackNavigationProp<HireDriverStackParamList, T>;

@@ -1,10 +1,10 @@
 
 export interface ContactAddressFormData {
-  currentLocation: { lat: number, lng: number }
+  currentLocation: { lat: number, lng: number } | null;
   address1: string;
   address2: string;
   contactNumber: string;
   nameOfGuarantor: string;
-  GuarantorContactNumber: string;
-  GuarantorAddress: string;
+  guarantorContactNumber: string;
+  guarantorAddress: string;
 }

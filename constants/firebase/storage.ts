@@ -1,4 +1,5 @@
 export enum objType {
   Vehicle = 'Vehicle',
-  Person = 'Person'
+  Person = 'Person',
+  License = 'License'
 }

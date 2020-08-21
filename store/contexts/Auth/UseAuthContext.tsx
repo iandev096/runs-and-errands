@@ -39,7 +39,6 @@ const useAuthContext = () => {
       const userCredential = await auth().createUserWithEmailAndPassword(email, password);
 
       const userInfo = getUserInfo(userCredential.user);
-      console.log('signing up \n', userInfo);
 
       await firestore().collection(usersColRef).doc(userCredential.user?.uid).set({
         email: userInfo.email,
@@ -61,7 +60,6 @@ const useAuthContext = () => {
     try {
       const userCredential = await auth().signInWithEmailAndPassword(email, password);
       const userInfo = getUserInfo(userCredential.user);
-      console.log('signing up \n', userInfo);
 
       await firestore().collection(usersColRef).doc(userCredential.user?.uid).set({
         email: userInfo.email,
@@ -83,7 +81,6 @@ const useAuthContext = () => {
   const authLogoutHandler = useCallback(async () => {
     setUser(null);
     try {
-      console.log('logout');
       await auth().signOut();
       await AsyncStorage.removeItem(asyncStorageUserKey);
       setIsLoading(false);

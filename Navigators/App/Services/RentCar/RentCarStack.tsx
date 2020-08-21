@@ -5,6 +5,7 @@ import { RentCarStackParamList } from './types';
 import { VehicleCategoryScreen } from './VehicleCategoryScreen';
 import { VehicleListScreen } from './VehicleListScreen';
 import { VehicleDetailScreen } from './VehicleDetailScreen';
+import { RentCarProvider } from '../../../../store/contexts/Services/RentCar/RentCarProvider';
 
 interface RentCarStackProps {
 
@@ -16,28 +17,30 @@ export const RentCarStack: React.FC<RentCarStackProps> = ({ }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Stack.Navigator
-      initialRouteName='VehicleCategory'
-      headerMode='none'
-    >
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='VehicleCategory'
-        component={VehicleCategoryScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='VehicleList'
-        component={VehicleListScreen}
-      />
-      <Stack.Screen
-        name='VehicleDetail'
-        component={VehicleDetailScreen}
-      />
-    </Stack.Navigator>
+    <RentCarProvider>
+      <Stack.Navigator
+        initialRouteName='VehicleCategory'
+        headerMode='none'
+      >
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='VehicleCategory'
+          component={VehicleCategoryScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='VehicleList'
+          component={VehicleListScreen}
+        />
+        <Stack.Screen
+          name='VehicleDetail'
+          component={VehicleDetailScreen}
+        />
+      </Stack.Navigator>
+    </RentCarProvider>
   );
 }

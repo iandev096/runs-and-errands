@@ -20,7 +20,7 @@ function generateImageName(objType: objType) {
 
 async function uploadBase64Img(blob: Blob, ref: storage.Reference) {
   try {
-    await ref.put(blob);
+    return ref.put(blob);
   } catch (err) {
     throw err;
   }
@@ -29,11 +29,12 @@ async function uploadBase64Img(blob: Blob, ref: storage.Reference) {
 export async function uploadUserServiceImage(service: SERVICE_NAME, objType: objType, uri: string) {
   const imageName = generateImageName(objType);
   const imageRef = generateUserServiceRef(service, objType).child(imageName);
-  const blob = getBlobFromUri(uri);
+  const blob = await getBlobFromUri(uri);
   try {
-    return await uploadBase64Img(blob, imageRef);
+    await uploadBase64Img(blob, imageRef);
+    const downloadURL = await imageRef.getDownloadURL();
+    return { downloadURL }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }

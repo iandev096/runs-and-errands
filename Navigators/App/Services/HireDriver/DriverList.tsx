@@ -4,14 +4,17 @@ import { Driver } from '../../../../data/hireDrivers/types';
 import { Theme } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { DriverCard } from '../../../../UIComponents/DriverCard';
+import { DriverStateProp } from '../../../../store/contexts/Services/HireDriver/types';
 
 interface DriverListProps {
-  drivers: Driver[]
+  drivers: DriverStateProp[]
   theme: Theme,
+  onRefresh?: (() => void) | null | undefined,
+  refreshing?: boolean,
   navToDetail: (driverId: string) => any
 }
 
-export const DriverList: React.FC<DriverListProps> = ({ drivers, theme, navToDetail }) => {
+export const DriverList: React.FC<DriverListProps> = ({ drivers, theme, navToDetail, onRefresh, refreshing }) => {
 
   const getYearsOfExpBadge = (year: number) => {
     const years = new Date().getFullYear() - year;
@@ -21,19 +24,21 @@ export const DriverList: React.FC<DriverListProps> = ({ drivers, theme, navToDet
   return (
     <FlatList
     data={drivers}
+    keyExtractor={item => item.docId}
     showsVerticalScrollIndicator={false}
-    contentContainerStyle={{ paddingBottom: 50 }}
+    onRefresh={onRefresh}
+    refreshing={refreshing}
+    contentContainerStyle={{ minHeight: Dimensions.get('window').height, paddingBottom: 50  }}
     renderItem={({ item }) => (
-      <View style={{ paddingVertical: 5 }}>
+      <View key={item.docId} style={{ paddingVertical: 5 }}>
         <DriverCard
-          key={item.id}
           isAvailable={item.isAvailable}
-          categories={item.categories}
-          thumbnailUrl={item.imageUrl}
-          name={item.firstName + ' ' + item.lastName}
+          vehicleTypes={item.detail.typesOfVehicles && Array.from(item.detail.typesOfVehicles)}
+          thumbnailUrl={item.detail.imageUrl}
+          name={item.detail.firstName + ' ' + item.detail.lastName}
           theme={theme}
-          badges={getYearsOfExpBadge(item.drivingSince)}
-          onPress={() => navToDetail(item.id)}
+          badges={getYearsOfExpBadge(item.detail.drivingSince)}
+          onPress={() => navToDetail(item.docId)}
         />
       </View>
     )}

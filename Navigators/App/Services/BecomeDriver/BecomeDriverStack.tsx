@@ -5,6 +5,7 @@ import { BecomeDriverStackParamList } from './types';
 import { DriverInfoScreen } from './DriverInfoScreen';
 import { LicenseInfoScreen } from './LicenseInfoScreen';
 import { ContactAddressScreen } from './ContactAddressScreen';
+import { BecomeDriverProvider } from '../../../../store/contexts/Services/BecomeDriver/BecomeDriverProvider';
 
 interface BecomeDriverStackProps {
 
@@ -16,34 +17,36 @@ export const BecomeDriverStack: React.FC<BecomeDriverStackProps> = ({ }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Stack.Navigator
-      initialRouteName='DriverInfo'
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerTintColor: '#fff',
-      }}
-    >
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
+    <BecomeDriverProvider>
+      <Stack.Navigator
+        initialRouteName='DriverInfo'
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
         }}
-        name='DriverInfo'
-        component={DriverInfoScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='LicenseInfo'
-        component={LicenseInfoScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: theme.colors?.primary }
-        }}
-        name='ContactAddress'
-        component={ContactAddressScreen}
-      />
-    </Stack.Navigator>
+      >
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='DriverInfo'
+          component={DriverInfoScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='LicenseInfo'
+          component={LicenseInfoScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: { backgroundColor: theme.colors?.primary }
+          }}
+          name='ContactAddress'
+          component={ContactAddressScreen}
+        />
+      </Stack.Navigator>
+    </BecomeDriverProvider>
   );
 }

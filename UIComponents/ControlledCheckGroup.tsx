@@ -53,7 +53,6 @@ export const ControlledCheckGroup: React.FC<ControlledCheckGroupProps> = ({ labe
               item={item}
               theme={theme}
               onValueChanged={(value) => {
-                console.log('valueChanged');
                 let checkGroupVal = props.value as string[];
                 if (value.selected) {
                   checkGroupVal.push(value.label);

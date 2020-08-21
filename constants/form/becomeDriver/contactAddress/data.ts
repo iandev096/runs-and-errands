@@ -29,7 +29,7 @@ export const contactAddressFormControls: formControl<keyof ContactAddressFormDat
     controlType: 'TextInput',
     input: {
       placeholder: '',
-      label: 'Primary Address',
+      label: 'Secondary Address',
       multiline: true,
     },
     icon: {
@@ -38,11 +38,11 @@ export const contactAddressFormControls: formControl<keyof ContactAddressFormDat
     }
   },
   {
-    name: 'contactNumber',
+    name: 'guarantorContactNumber',
     controlType: 'TextInput',
     input: {
       placeholder: '',
-      label: 'Contact Number',
+      label: 'Guarantor Contact Number',
     },
     keyboardType: 'phone-pad',
     icon: {
@@ -63,20 +63,7 @@ export const contactAddressFormControls: formControl<keyof ContactAddressFormDat
     }
   },
   {
-    name: 'contactNumber',
-    controlType: 'TextInput',
-    input: {
-      placeholder: '',
-      label: 'Contact Number',
-    },
-    keyboardType: 'phone-pad',
-    icon: {
-      name: 'ios-phone-portrait',
-      type: 'ionicon'
-    }
-  },
-  {
-    name: 'GuarantorAddress',
+    name: 'guarantorAddress',
     controlType: 'TextInput',
     input: {
       placeholder: '',

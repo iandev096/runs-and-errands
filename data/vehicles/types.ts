@@ -28,31 +28,17 @@ export enum ADDITIONAL_INFO {
   FourWheel = 'Four Wheel',
 }
 export type Vehicle = {
-  owner?: {
-    id: string,
-    name: string,
-    imageUrl?: any
-  },
-  driverOptions?: {
-    preffered: driverOption,
-  },
-  id : string,
   make : string,
   model?: string,
-  categories : CATEGORIES[],
+  category : CATEGORIES[],
   gearbox : gearbox,
   deposit : number,
-  fuel : fuel;
+  fuelType : fuel;
   color : string,
-  pricePerDay : {
-    min: number
-  },
-  pricePerHalf : {
-    min: number
-  },
+  pricePerDay : number,
+  pricePerHalf : number,
   mileage : number,
   description : string,
-  isAvailable : boolean,
   imageUrl : any,
   additionalInfo : Set<ADDITIONAL_INFO>,
   RegistrationPlateNumber?: string,

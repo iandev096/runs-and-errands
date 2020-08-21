@@ -8,7 +8,10 @@ export type RentCarStackParamList = {
   },
   VehicleDetail: {
     vehicleId: string
-  }
+  },
+
+  // bubbled up
+  Tabs: undefined
 }
 
 export type RentCarNavigationProp<T extends keyof RentCarStackParamList> = StackNavigationProp<RentCarStackParamList, T>;

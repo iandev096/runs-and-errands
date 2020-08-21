@@ -38,7 +38,6 @@ export const LocationInput: React.FC<LocationInputProps> = ({ initialLocation, e
   useEffect(() => {
     if (errorMessage && (!location)) setErr(errorMessage);
     else setErr(undefined);
-    console.log(errorMessage)
   }, [errorMessage, location]);
 
   const locationChangeHandler = (location: Location) => {

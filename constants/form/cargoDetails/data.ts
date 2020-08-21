@@ -21,6 +21,9 @@ export const cargoDetailsFormControls: formControl<keyof CargoDetailsFormData>[]
     controlType: 'PickerInput',
     items: [
       { label: EsQUANTITY.less100, value: EsQUANTITY.less100 },
+      { label: EsQUANTITY.upperLim500, value: EsQUANTITY.upperLim500 },
+      { label: EsQUANTITY.upperLim1000, value: EsQUANTITY.upperLim1000 },
+      { label: EsQUANTITY.more1000, value: EsQUANTITY.more1000 },
     ]
   },
   {

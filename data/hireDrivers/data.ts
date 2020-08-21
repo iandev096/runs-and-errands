@@ -1,6 +1,5 @@
 import { CATEGORIES, DriverCategoryCard, Driver, VEHICLE_TYPE } from "./types";
 
-
 export const DRIVER_CATEGORIES: DriverCategoryCard[] = [
   {
     name: CATEGORIES.Personal,
@@ -16,7 +15,6 @@ export const DRIVER_CATEGORIES: DriverCategoryCard[] = [
 
 export const HIRE_DRIVERS: Driver[] = [
   {
-    id: 'dr1',
     firstName: 'Daniel',
     lastName: 'Dwamena',
     about: 'Dedicated and punctual.',
@@ -36,11 +34,8 @@ export const HIRE_DRIVERS: Driver[] = [
     ]),
     nameOnLicense: 'DANIEL DWAMENA',
     drivingSince: 2000,
-    isAvailable: true,
-    categories: [CATEGORIES.Personal, CATEGORIES.Pickup]
   },
   {
-    id: 'dr2',
     firstName: 'Daniel',
     lastName: 'Dwamena',
     about: 'Dedicated and punctual.',
@@ -60,11 +55,8 @@ export const HIRE_DRIVERS: Driver[] = [
     ]),
     nameOnLicense: 'DANIEL DWAMENA',
     drivingSince: 2006,
-    isAvailable: true,
-    categories: [CATEGORIES.Personal, CATEGORIES.Pickup]
   },
   {
-    id: 'dr3',
     firstName: 'Daniel',
     lastName: 'Dwamena',
     about: 'Dedicated and punctual.',
@@ -84,7 +76,5 @@ export const HIRE_DRIVERS: Driver[] = [
     ]),
     nameOnLicense: 'DANIEL DWAMENA',
     drivingSince: 2010,
-    isAvailable: true,
-    categories: [CATEGORIES.Personal, CATEGORIES.Pickup]
   }
 ];

@@ -4,8 +4,6 @@ import { SERVICE_NAME } from "../../../data/services/data";
 
 export type RequestsTabsParamList = {
   All: undefined,
-  [SERVICE_NAME.CargoGoods]: undefined,
-  [SERVICE_NAME.ErrandDelivery]: undefined,
   [SERVICE_NAME.HireDriver]: undefined,
   [SERVICE_NAME.RentCar]: undefined,
 }

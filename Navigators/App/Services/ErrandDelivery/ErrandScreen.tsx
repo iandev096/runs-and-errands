@@ -8,6 +8,9 @@ import { ErrandFormData } from '../../../../constants/form/errandDelivery/errand
 import { RenderFormControls } from '../../../../util/form/RenderFormControls';
 import { FormScreen } from '../../../../UIComponents/FormScreen';
 import { ErrandDeliveryNavigationProp } from './types';
+import { ErrandDeliveryContext } from '../../../../store/contexts/Services/ErrandDelivery/ErrandDeliveryContext';
+import { Alert } from 'react-native';
+import { Loader } from '../../../../UIComponents/Loader';
 
 interface ErrandScreenProps {
   navigation: ErrandDeliveryNavigationProp<'Errand'>;
@@ -22,16 +25,18 @@ const schema = yup.object().shape({
 
 const ctrlNames = errandFormControls.map(fc => fc.name);
 export const ErrandScreen: React.FC<ErrandScreenProps> = ({ navigation }) => {
+  const { dispatch, errand } = useContext(ErrandDeliveryContext);
   const { control, handleSubmit, errors, setValue, clearErrors } = useForm<ErrandFormData>({
     defaultValues: {
-      contactNumber: '',
-      from: null,
-      to: null,
-      instructions: ''
+      contactNumber: errand?.contactNumber ?? '',
+      from: errand?.from ?? null,
+      to: errand?.to ?? null,
+      instructions: errand?.instructions ?? ''
     },
     resolver: yupResolver(schema)
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const { theme } = useContext(ThemeContext);
   const [formValid, setFormValid] = useState(false);
 
@@ -47,8 +52,35 @@ export const ErrandScreen: React.FC<ErrandScreenProps> = ({ navigation }) => {
     }
   }, formValidDependencies);
 
-  const submitHandler = (f: any) => {
-    console.log(f);
+
+  const submitHandler = async (f: ErrandFormData) => {
+    try {
+      setIsLoading(true);
+      await dispatch({
+        type: 'POST_ERRAND',
+        payload: {
+          contactNumber: f.contactNumber,
+          from: f.from,
+          to: f.to,
+          instructions: f.instructions
+        }
+      });
+      setIsLoading(false);
+      Alert.alert('Success', 'We have received your details', [{
+        text: 'OK',
+        onPress: () => navigation.navigate('Tabs')
+      }])
+    } catch (err) {
+      Alert.alert('Error', 'Error posting Errand. Please try again', [
+        {
+          text: 'Go HOME',
+          onPress: () => navigation.navigate('Tabs')
+        }, {
+          style: 'default',
+          text: 'Try Again'
+        }
+      ]);
+    }
   }
 
   const renderedControls = RenderFormControls<ErrandFormData>({
@@ -61,20 +93,23 @@ export const ErrandScreen: React.FC<ErrandScreenProps> = ({ navigation }) => {
   });
 
   return (
-    <FormScreen
-      heading='Errand Details'
-      theme={theme}
-      leftFooterButton={{
-        title: 'BACK',
-        onPress: () => { navigation.goBack() }
-      }}
-      rightFooterButton={{
-        title: 'NEXT',
-        onPress: handleSubmit(submitHandler),
-        disabled: !formValid
-      }}
-    >
-      {renderedControls}
-    </FormScreen>
+    <>
+      <Loader theme={theme} isLoading={isLoading} transparent={true} />
+      <FormScreen
+        heading='Errand Details'
+        theme={theme}
+        leftFooterButton={{
+          title: 'BACK',
+          onPress: () => { navigation.goBack() }
+        }}
+        rightFooterButton={{
+          title: 'SUBMIT',
+          onPress: handleSubmit(submitHandler),
+          disabled: !formValid
+        }}
+      >
+        {renderedControls}
+      </FormScreen>
+    </>
   );
 };

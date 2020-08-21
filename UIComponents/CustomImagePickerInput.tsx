@@ -16,9 +16,14 @@ export type ImagePickerImg = { base64?: string, uri: string };
 export const CustomImagePickerInput: React.FC<CustomImagePickerInputProps> = ({ label, onValueChanged, theme, disabled, errorMessage }) => {
   const [image, setImage] = useState<ImagePickerImg>();
   const [error, setError] = useState<any>();
+  const [showErrMsg, setShowErrMsg] = useState(true);
 
   useEffect(() => {
-    if (image) onValueChanged(image);
+    if (image) {
+      onValueChanged(image);
+      setError(null);
+      setShowErrMsg(false);
+    }
   }, [image]);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ export const CustomImagePickerInput: React.FC<CustomImagePickerInputProps> = ({ 
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 1
+        quality: 0.5
       });
       if (!result.cancelled) {
         setImage({ uri: result.uri })
@@ -122,7 +127,7 @@ export const CustomImagePickerInput: React.FC<CustomImagePickerInputProps> = ({ 
         </View>
       </TouchableScale>
       {error?.message && <Text style={{ color: theme.colors?.error, fontSize: 12 }}>{error?.message}</Text>}
-      {errorMessage && <Text style={{ color: theme.colors?.error, fontSize: 12 }}>{errorMessage}</Text>}
+      {showErrMsg && errorMessage && <Text style={{ color: theme.colors?.error, fontSize: 12 }}>{errorMessage}</Text>}
     </View>
   );
 };

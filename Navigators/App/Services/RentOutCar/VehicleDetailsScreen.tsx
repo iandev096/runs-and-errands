@@ -8,6 +8,7 @@ import { FormScreen } from '../../../../UIComponents/FormScreen';
 import { RentOutCarNavigationProp } from './types';
 import { vehicleDetailsFormControls } from '../../../../constants/form/rentOutCar/vehicleDetails/data';
 import { VehicleDetailFormData } from '../../../../constants/form/rentOutCar/vehicleDetails/types';
+import { RentOutCarContext } from '../../../../store/contexts/Services/RentOutCar/RentOutCarContext';
 
 interface VehicleDetailsScreenProps {
   navigation: RentOutCarNavigationProp<'VehicleDetails'>
@@ -39,7 +40,7 @@ export const VehicleDetailsScreen: React.FC<VehicleDetailsScreenProps> = ({ navi
     },
     resolver: yupResolver(schema)
   });
-  
+  const { dispatch } = useContext(RentOutCarContext);
   const { theme } = useContext(ThemeContext);
   const [formValid, setFormValid] = useState(false);
 
@@ -55,8 +56,8 @@ export const VehicleDetailsScreen: React.FC<VehicleDetailsScreenProps> = ({ navi
     }
   }, formValidDependencies);
 
-  const nextHandler = (f: any) => {
-  
+  const nextHandler = (f: VehicleDetailFormData) => {
+    dispatch({ type: 'SET_VEHICLE_DETAILS', payload: f });
     navigation.navigate('DriverOptions');
   }
 
